@@ -208,10 +208,13 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
         if (entity instanceof GolemEntity) {
             damage *= 0.5;
         }
-        if(!this.world.isRemote &&!this.getIsAwaken() ){
+        boolean attack = super.attackEntityFrom(source, damage);
+
+        if(attack &&!this.getIsAwaken() ){
             this.setIsAwaken(true);
         }
-        return super.attackEntityFrom(source, damage);
+
+        return attack;
     }
 
     public boolean func_241845_aY() {
@@ -533,7 +536,7 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
     }
 
     protected PathNavigator createNavigator(World worldIn) {
-        return new GroundPathNavigatorWide(this, world);
+        return new CMPathNavigateGround(this, world);
     }
 
 

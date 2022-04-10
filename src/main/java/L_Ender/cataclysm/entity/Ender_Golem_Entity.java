@@ -4,7 +4,6 @@ import L_Ender.cataclysm.config.CMConfig;
 import L_Ender.cataclysm.entity.AI.CmAttackGoal;
 import L_Ender.cataclysm.entity.effect.ScreenShake_Entity;
 import L_Ender.cataclysm.entity.etc.CMPathNavigateGround;
-import L_Ender.cataclysm.entity.etc.GroundPathNavigatorWide;
 import L_Ender.cataclysm.entity.etc.SmartBodyHelper2;
 import L_Ender.cataclysm.entity.projectile.Void_Rune_Entity;
 import L_Ender.cataclysm.init.ModSounds;
@@ -451,7 +450,7 @@ public class Ender_Golem_Entity extends Boss_monster {
     }
 
     protected PathNavigator createNavigator(World worldIn) {
-        return new GroundPathNavigatorWide(this, world);
+        return new CMPathNavigateGround(this, world);
     }
 
     class AttackGoal extends Goal {

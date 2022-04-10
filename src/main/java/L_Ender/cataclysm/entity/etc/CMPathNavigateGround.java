@@ -105,53 +105,6 @@ public class CMPathNavigateGround extends GroundPathNavigator {
             float dist = dir ? (ldi[i] + 1 - lead) : (lead - ldi[i]);
             tNext[i] = tDelta[i] < Float.POSITIVE_INFINITY ? tDelta[i] * dist : Float.POSITIVE_INFINITY;
         }
-        final BlockPos.Mutable pos = new BlockPos.Mutable();
-        do {
-            // stepForward
-            int axis = (tNext[0] < tNext[1]) ?
-                    ((tNext[0] < tNext[2]) ? 0 : 2) :
-                    ((tNext[1] < tNext[2]) ? 1 : 2);
-            float dt = tNext[axis] - t;
-            t = tNext[axis];
-            ldi[axis] += step[axis];
-            tNext[axis] += tDelta[axis];
-            for (int i = 0; i < 3; i++) {
-                tr[i] += dt * normed[i];
-                tri[i] = trailEdgeToInt(tr[i], step[i]);
-            }
-            // checkCollision
-            int stepx = step[0];
-            int x0 = (axis == 0) ? ldi[0] : tri[0];
-            int x1 = ldi[0] + stepx;
-            int stepy = step[1];
-            int y0 = (axis == 1) ? ldi[1] : tri[1];
-            int y1 = ldi[1] + stepy;
-            int stepz = step[2];
-            int z0 = (axis == 2) ? ldi[2] : tri[2];
-            int z1 = ldi[2] + stepz;
-            for (int x = x0; x != x1; x += stepx) {
-                for (int z = z0; z != z1; z += stepz) {
-                    for (int y = y0; y != y1; y += stepy) {
-                        BlockState block = this.world.getBlockState(pos.setPos(x, y, z));
-                        if (!block.allowsMovement(this.world, pos, PathType.LAND)) {
-                            return false;
-                        }
-                    }
-                    PathNodeType pathnodetype = this.nodeProcessor.determineNodeType(this.world, x, y0 - 1, z, this.entity, 1, 1, 1, true, true);
-                    if (!this.func_230287_a_(pathnodetype)) {
-                        return false;
-                    }
-                    pathnodetype = this.nodeProcessor.determineNodeType(this.world, x, y0, z, this.entity, 1, y1 - y0, 1, true, true);
-                    float priority = this.entity.getPathPriority(pathnodetype);
-                    if (priority < 0.0F || priority >= 8.0F) {
-                        return false;
-                    }
-                    if (pathnodetype == PathNodeType.DAMAGE_FIRE || pathnodetype == PathNodeType.DANGER_FIRE || pathnodetype == PathNodeType.DAMAGE_OTHER) {
-                        return false;
-                    }
-                }
-            }
-        } while (t <= max_t);
         return true;
     }
 

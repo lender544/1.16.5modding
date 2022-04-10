@@ -851,7 +851,7 @@ public class Ender_Guardian_Entity extends Boss_monster {
     }
 
     protected PathNavigator createNavigator(World worldIn) {
-        return new GroundPathNavigatorWide(this, world);
+        return new CMPathNavigateGround(this, world);
     }
 
 
