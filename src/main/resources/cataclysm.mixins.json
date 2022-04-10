@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "L_Ender.cataclysm.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.8",
+  "refmap": "cataclysm.refmap.json",
+  "mixins": [
+
+  ],
+  "client": [
+
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
