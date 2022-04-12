@@ -81,6 +81,7 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
     private int lavabombmagazine = CMConfig.Lavabombmagazine;
     public boolean Blocking = CMConfig.NetheritemonstrosityBodyBloking;
     public float deactivateProgress;
+    private int blockBreakCounter;
     public float prevdeactivateProgress;
 
     public Netherite_Monstrosity_Entity(EntityType entity, World world) {
@@ -278,7 +279,7 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
             Makeparticle(4.75f,2.5f);
             Makeparticle(4.75f,-2.5f);
         }
-
+        BlockBreaking();
         if(deactivateProgress == 0 && this.isAlive()) {
             if(!isAIDisabled() && this.getAnimation() == NO_ANIMATION && this.isBerserk() && !this.getIsBerserk()){
                 this.setAnimation(MONSTROSITY_BERSERK);
@@ -471,6 +472,34 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
                 }
             }
             }
+        }
+    }
+
+    private void BlockBreaking() {
+        if (this.blockBreakCounter > 0) {
+            --this.blockBreakCounter;
+            return;
+        }
+
+        if (!this.world.isRemote && this.blockBreakCounter == 0) {
+            if (ForgeEventFactory.getMobGriefingEvent(this.world, this)) {
+                for (int a = (int) Math.round(this.getBoundingBox().minX); a <= (int) Math.round(this.getBoundingBox().maxX); a++) {
+                    for (int b = (int) Math.round(this.getBoundingBox().minY); (b <= (int) Math.round(this.getBoundingBox().maxY) + 1) && (b <= 127); b++) {
+                        for (int c = (int) Math.round(this.getBoundingBox().minZ); c <= (int) Math.round(this.getBoundingBox().maxZ); c++) {
+                            BlockPos blockpos = new BlockPos(a, b, c);
+                            Block block = world.getBlockState(new BlockPos(blockpos)).getBlock();
+                            TileEntity tileEntity = world.getTileEntity(blockpos);
+                            if (block != Blocks.AIR && BlockTags.getCollection().get(ModTag.NETHERITE_MONSTROSITY_BREAK).contains(block)) {
+                                boolean flag = world.destroyBlock(new BlockPos(a, b, c), shouldDropItem(tileEntity));
+                                if (flag) {
+                                    blockBreakCounter = 10;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 
