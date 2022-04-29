@@ -831,7 +831,7 @@ public class Ignis_Entity extends Boss_monster {
         public void tick() {
             LivingEntity target = Ignis_Entity.this.getAttackTarget();
             if (Ignis_Entity.this.getAnimationTick() < 25 && target != null) {
-                Ignis_Entity.this.faceEntity(target, 30.0F, 30.0F);
+                Ignis_Entity.this.getLookController().setLookPositionWithEntity(target, 30.0F, 30.0F);
             } else {
                 Ignis_Entity.this.rotationYaw = Ignis_Entity.this.prevRotationYaw;
             }
