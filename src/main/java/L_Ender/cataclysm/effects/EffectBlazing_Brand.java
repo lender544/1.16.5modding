@@ -7,11 +7,12 @@ import net.minecraft.potion.AttackDamageEffect;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 
-public class EffectBlazing_Brand extends AttackDamageEffect {
+public class EffectBlazing_Brand extends Effect {
 
     public EffectBlazing_Brand() {
-        super(EffectType.HARMFUL, 0X865337,-4);
-        this.addAttributesModifier(Attributes.ARMOR, "68078724-8653-42D5-A245-9D14A1F54685", 0.0D, AttributeModifier.Operation.ADDITION);
+        super(EffectType.HARMFUL, 0xDC143C);
+        this.addAttributesModifier(Attributes.ARMOR, "68078724-8653-42D5-A245-9D14A1F54685", -4.0D, AttributeModifier.Operation.ADDITION);
+        this.addAttributesModifier(Attributes.ARMOR_TOUGHNESS, "B237E76D-15E8-4513-A735-55BB25C33603", -1.0D, AttributeModifier.Operation.ADDITION);
     }
 
     public void performEffect(LivingEntity LivingEntityIn, int amplifier) {

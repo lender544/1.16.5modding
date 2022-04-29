@@ -4,6 +4,7 @@ package L_Ender.cataclysm.init;
 import L_Ender.cataclysm.cataclysm;
 import L_Ender.cataclysm.effects.EffectBlazing_Brand;
 import L_Ender.cataclysm.effects.EffectMonstrous;
+import L_Ender.cataclysm.effects.EffectStun;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,4 +18,6 @@ public class ModEffect {
     public static final RegistryObject<Effect> EFFECTMONSTROUS = EFFECTS.register("monstrous", EffectMonstrous::new);
 
     public static final RegistryObject<Effect> EFFECTBLAZING_BRAND = EFFECTS.register("blazing_brand", EffectBlazing_Brand::new);
+
+    public static final RegistryObject<Effect> EFFECTSTUN = EFFECTS.register("stun", EffectStun::new);
 }

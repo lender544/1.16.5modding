@@ -1,5 +1,6 @@
 package L_Ender.cataclysm.entity;
 
+import L_Ender.cataclysm.init.ModEffect;
 import com.github.alexthe666.citadel.animation.Animation;
 import com.github.alexthe666.citadel.animation.AnimationHandler;
 import com.github.alexthe666.citadel.animation.IAnimatedEntity;
@@ -9,6 +10,8 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -234,6 +237,10 @@ public class Boss_monster extends MonsterEntity implements IAnimatedEntity {
         }
         this.currentAnimation = animation;
         setAnimationTick(0);
+    }
+
+    public boolean isPotionApplicable(EffectInstance potioneffectIn) {
+        return potioneffectIn.getPotion() == ModEffect.EFFECTSTUN.get() ? false : super.isPotionApplicable(potioneffectIn);
     }
 
     @Nullable
