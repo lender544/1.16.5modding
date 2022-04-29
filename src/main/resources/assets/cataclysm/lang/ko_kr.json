@@ -12,6 +12,7 @@
   "item.cataclysm.monstrous_helm2.desc": "방어력,넉백저항,생명력재생이 강해지는 버프가 걸린다.",
   "item.cataclysm.void_core.desc": "사용시 공허의 룬을 사용 할 수 있다.",
   "item.cataclysm.wip.desc": "개발자 아이템 추가될 수 도 있고 변경될 수 도 있고 없어질 수 도 있음",
+  "you_cant_escape": "넌 벗어날 수 없다.",
 
   "item.cataclysm.enderite_ingot": "엔더라이트 주괴",
   "item.cataclysm.ignitium_ingot": "이그니티움 주괴",
@@ -82,6 +83,7 @@
 
   "effect.cataclysm.monstrous": "괴력",
   "effect.cataclysm.blazing_brand": "불타는 낙인",
+  "effect.cataclysm.stun": "기절",
 
   "golemhurt.sub": "엔더 골렘이 상처를 입음",
   "golemdeath.sub": "엔더 골렘이 죽음",
@@ -105,7 +107,7 @@
   "endermaptera_death.sub": "엔더마프테라가 죽음",
   "voidrunerising.sub": "공허의 룬이 솟아남",
 
-  "advancements.cataclysm.root.title": "대격벽",
+  "advancements.cataclysm.root.title": "대격변",
   "advancements.cataclysm.root.description": "대격변!",
   "advancements.cataclysm.find_ruined_citadel.title": "폐허가 된 성채",
   "advancements.cataclysm.find_ruined_citadel.description": "폐허가 된 성채를 찾으세요",
@@ -113,8 +115,8 @@
   "advancements.cataclysm.find_soul_black_smith.description": "영혼 대장간을 찾으세요",
   "advancements.cataclysm.kill_ender_golem.title": "팔레트 스왑",
   "advancements.cataclysm.kill_ender_golem.description": "엔더 골렘을 처치하세요",
-  "advancements.cataclysm.kill_ender_guardian.title": "저거 셜커였어?",
-  "advancements.cataclysm.kill_ender_guardian.description": "엔더 가디언을 쓰러뜨리세요",
+  "advancements.cataclysm.kill_ender_guardian.title": "엔더 수호자의 비밀",
+  "advancements.cataclysm.kill_ender_guardian.description": "엔더 수호자를 쓰러뜨리세요",
   "advancements.cataclysm.kill_monstrosity.title": "망가진 네더의 전쟁병기",
   "advancements.cataclysm.kill_monstrosity.description": "네더라이트 괴물을 처치하세요"
 }

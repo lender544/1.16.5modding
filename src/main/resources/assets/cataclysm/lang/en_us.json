@@ -12,6 +12,7 @@
   "item.cataclysm.monstrous_helm2.desc": "gain buffs that strengthen defense, knockback resistance, and regeneration.",
   "item.cataclysm.void_core.desc": "when rignt click, you can summon void rune.",
   "item.cataclysm.wip.desc": "W.I.P",
+  "you_cant_escape": "You can't escape",
 
   "item.cataclysm.enderite_ingot": "Enderite ingot",
   "item.cataclysm.ignitium_ingot": "Ignitium ingot",
@@ -79,8 +80,9 @@
   "entity.cataclysm.void_shard": "Void Shard",
   "entity.cataclysm.ignis": "Ignis",
 
-  "effect.cataclysm.monstrous": "monstrous",
+  "effect.cataclysm.monstrous": "Monstrous",
   "effect.cataclysm.blazing_brand": "Blazing Brand",
+  "effect.cataclysm.stun": "Stun",
 
   "golemhurt.sub": "Ender Golem hurts",
   "golemdeath.sub": "Ender Golem dies",
