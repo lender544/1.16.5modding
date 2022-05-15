@@ -136,6 +136,14 @@
       }
     ]
   },
+  "ignis_ambient": {
+    "subtitle": "ignis_ambient.sub",
+    "sounds": [
+      {
+        "name": "cataclysm:entity/ignis_ambient"
+      }
+    ]
+  },
   "flamethrower": {
     "subtitle": "flamethrower.sub",
     "sounds": [

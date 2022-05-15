@@ -208,11 +208,6 @@ public class ServerEventHandler {
                 event.getEntityLiving().world.addParticle(ParticleTypes.CRIT, true, event.getEntityLiving().getPosX() + extraX, event.getEntityLiving().getPosYEye() + 0.5F, event.getEntityLiving().getPosZ() + extraZ, 0, 0, 0);
             }
         }
-        if (event.getEntityLiving() instanceof Ignis_Entity) {
-            if (!event.getEntityLiving().getPassengers().isEmpty() && event.getEntityLiving().getPassengers().get(0).isSneaking()) {
-                event.getEntityLiving().getPassengers().get(0).setSneaking(false);
-            }
-        }
     }
 }
 

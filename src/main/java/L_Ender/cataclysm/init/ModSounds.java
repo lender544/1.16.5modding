@@ -88,4 +88,7 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> FLAME_BURST = SOUNDS.register("flame_burst",
             () -> new SoundEvent(new ResourceLocation(cataclysm.MODID,"flame_burst")));
+
+    public static final RegistryObject<SoundEvent> IGNIS_AMBIENT = SOUNDS.register("ignis_ambient",
+            () -> new SoundEvent(new ResourceLocation(cataclysm.MODID,"ignis_ambient")));
 }

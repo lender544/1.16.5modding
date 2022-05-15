@@ -31,7 +31,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: "org.spongepowered.mixin"
 
-version = '0.17'
+version = '0.18'
 group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Cataclysm'
 
@@ -127,7 +127,7 @@ jar {
         attributes([
                 "Specification-Title": "cataclysm",
                 "Specification-Vendor": "L_Ender",
-                "Specification-Version": "0.16", // We are version 1 of ourselves
+                "Specification-Version": "0.18", // We are version 1 of ourselves
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
                 "Implementation-Vendor" :"L_Ender",
