@@ -73,7 +73,7 @@ public class ClientEvent {
     public void onRenderHUD(RenderGameOverlayEvent.Pre event) {
         PlayerEntity player = Minecraft.getInstance().player;
         if (player != null && player.isPassenger()) {
-            if (player.getPassengers() instanceof Ignis_Entity) {
+            if (player.getRidingEntity() instanceof Ignis_Entity) {
                 if (event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)) {
                     Minecraft.getInstance().ingameGUI.setOverlayMessage(new TranslationTextComponent("you_cant_escape"), false);
                 }
