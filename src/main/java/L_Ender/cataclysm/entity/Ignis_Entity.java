@@ -18,7 +18,6 @@ import net.minecraft.entity.ai.controller.BodyController;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.monster.RavagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -32,7 +31,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -70,6 +68,7 @@ public class Ignis_Entity extends Boss_monster {
     public static final Animation BODY_CHECK_ATTACK1 = Animation.create(62);
     public static final Animation BODY_CHECK_ATTACK2 = Animation.create(62);
     public static final Animation BODY_CHECK_ATTACK3 = Animation.create(62);
+    public static final Animation BODY_CHECK_ATTACK4 = Animation.create(62);
     public static final int BODY_CHECK_COOLDOWN = 200;
     private static final DataParameter<Boolean> IS_BLOCKING = EntityDataManager.createKey(Ignis_Entity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> IS_SHIELD = EntityDataManager.createKey(Ignis_Entity.class, DataSerializers.BOOLEAN);
@@ -102,6 +101,7 @@ public class Ignis_Entity extends Boss_monster {
                 PHASE,
                 SHIELD_SMASH_ATTACK,
                 PHASE_2,
+                BODY_CHECK_ATTACK4,
                 BODY_CHECK_ATTACK3,
                 BODY_CHECK_ATTACK2,
                 BODY_CHECK_ATTACK1,
@@ -318,14 +318,14 @@ public class Ignis_Entity extends Boss_monster {
                 this.setAnimation(PHASE_2);
             } else if (target != null && target.isAlive()) {
                 if (!isAIDisabled() && this.getAnimation() == NO_ANIMATION) {
-                    if (this.getDistanceSq(target) >= 64 && this.getDistanceSq(target) <= 1024.0D && target.isOnGround() && this.getRNG().nextFloat() * 100.0F < 1f) {
+                    if (this.getDistanceSq(target) >= 64 && this.getDistanceSq(target) <= 1024.0D && this.getRNG().nextFloat() * 100.0F < 3f) {
                         this.setAnimation(SMASH_IN_AIR);
-                    } else if (this.getDistance(target) < 5.5F && this.getRNG().nextFloat() * 100.0F < 9f) {
+                    } else if (this.getDistance(target) < 5.5F && this.getRNG().nextFloat() * 100.0F < 10f) {
                         Animation animation = getRandomPoke(rand);
                         this.setAnimation(animation);
-                    } else if (this.getDistance(target) < 5F && this.getRNG().nextFloat() * 100.0F < 8f) {
+                    } else if (this.getDistance(target) < 5F && this.getRNG().nextFloat() * 100.0F < 10f) {
                         this.setAnimation(HORIZONTAL_SWING_ATTACK);
-                    } else if (this.getDistance(target) < 3F && this.getRNG().nextFloat() * 100.0F < 28f) {
+                    } else if (this.getDistance(target) < 3F && this.getRNG().nextFloat() * 100.0F < 36f) {
                         if (this.rand.nextInt(3) == 0 && body_check_cooldown <= 0) {
                             body_check_cooldown = BODY_CHECK_COOLDOWN;
                             this.setAnimation(BODY_CHECK_ATTACK1);
@@ -351,7 +351,8 @@ public class Ignis_Entity extends Boss_monster {
             else if (this.getAnimation() == HORIZONTAL_SWING_ATTACK) {
                 setIsShield(this.getAnimationTick() > 31);
             }
-            else if (this.getAnimation() == BODY_CHECK_ATTACK1 || this.getAnimation() == BODY_CHECK_ATTACK2) {
+            else if (this.getAnimation() == BODY_CHECK_ATTACK1 || this.getAnimation() == BODY_CHECK_ATTACK2 ||
+                    this.getAnimation() == BODY_CHECK_ATTACK3 || this.getAnimation() == BODY_CHECK_ATTACK4) {
                 setIsShield(this.getAnimationTick() < 25);
             }
             else if(this.getAnimation() == POKE_ATTACK) {
@@ -442,7 +443,10 @@ public class Ignis_Entity extends Boss_monster {
             }
         }
 
-        if (this.getAnimation() == BODY_CHECK_ATTACK1 || this.getAnimation() == BODY_CHECK_ATTACK2 || this.getAnimation() == BODY_CHECK_ATTACK3) {
+        if (this.getAnimation() == BODY_CHECK_ATTACK1
+                || this.getAnimation() == BODY_CHECK_ATTACK2
+                || this.getAnimation() == BODY_CHECK_ATTACK3
+                || this.getAnimation() == BODY_CHECK_ATTACK4) {
             if (this.getAnimationTick() == 25) {
                 BodyCheckAttack(3.0f,6,120,0.8f,0.03f,40,80);
             }
@@ -693,7 +697,7 @@ public class Ignis_Entity extends Boss_monster {
                 LivingEntity target = this.getAttackTarget();
                 if (target != null) {
                     if(passenger == target) {
-                        boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), 3 + target.getMaxHealth() * 0.02f);
+                        boolean flag = target.attackEntityFrom(DamageSource.causeMobDamage(this), 4 + target.getMaxHealth() * 0.02f);
                         if (flag) {
                             EffectInstance effectinstance1 = target.getActivePotionEffect(ModEffect.EFFECTBLAZING_BRAND.get());
                             int i = 1;
@@ -865,6 +869,11 @@ public class Ignis_Entity extends Boss_monster {
                         Ignis_Entity.this.addVelocity(f1 * 1.5, 0, f2 * 1.5);
                     }
                 }
+                if (Ignis_Entity.this.getAnimationTick() == 42 && shouldFollowUp(3.0f) && Ignis_Entity.this.rand.nextInt(2) == 0 && body_check_cooldown <= 0) {
+                    body_check_cooldown = BODY_CHECK_COOLDOWN;
+                    AnimationHandler.INSTANCE.sendAnimationMessage(Ignis_Entity.this, BODY_CHECK_ATTACK4);
+                }
+
                 if (Ignis_Entity.this.getAnimationTick() > 40 || Ignis_Entity.this.getAnimationTick() < 34) {
                     Ignis_Entity.this.setMotion(0, Ignis_Entity.this.getMotion().y, 0);
                 }
@@ -886,6 +895,11 @@ public class Ignis_Entity extends Boss_monster {
                         Ignis_Entity.this.addVelocity(f1 * 1.5, 0, f2 * 1.5);
                     }
                 }
+                if (Ignis_Entity.this.getAnimationTick() == 36 && shouldFollowUp(3.0f) && Ignis_Entity.this.rand.nextInt(2) == 0 && body_check_cooldown <= 0) {
+                    body_check_cooldown = BODY_CHECK_COOLDOWN;
+                    AnimationHandler.INSTANCE.sendAnimationMessage(Ignis_Entity.this, BODY_CHECK_ATTACK4);
+                }
+
                 if (Ignis_Entity.this.getAnimationTick() > 34 || Ignis_Entity.this.getAnimationTick() < 28) {
                     Ignis_Entity.this.setMotion(0, Ignis_Entity.this.getMotion().y, 0);
                 }
@@ -907,11 +921,15 @@ public class Ignis_Entity extends Boss_monster {
                         Ignis_Entity.this.addVelocity(f1 * 1.5, 0, f2 * 1.5);
                     }
                 }
+                if (Ignis_Entity.this.getAnimationTick() == 33 && shouldFollowUp(3.0f) && Ignis_Entity.this.rand.nextInt(2) == 0 && body_check_cooldown <= 0) {
+                    body_check_cooldown = BODY_CHECK_COOLDOWN;
+                    AnimationHandler.INSTANCE.sendAnimationMessage(Ignis_Entity.this, BODY_CHECK_ATTACK4);
+                }
+
                 if (Ignis_Entity.this.getAnimationTick() > 30 || Ignis_Entity.this.getAnimationTick() < 24) {
                     Ignis_Entity.this.setMotion(0, Ignis_Entity.this.getMotion().y, 0);
                 }
             }
-
         }
     }
 
@@ -990,7 +1008,7 @@ public class Ignis_Entity extends Boss_monster {
             }
             Ignis_Entity.this.setMotion(0, Ignis_Entity.this.getMotion().y, 0);
 
-            if (Ignis_Entity.this.getAnimationTick() == 45 && shouldFollowUp(3.5f) && Ignis_Entity.this.rand.nextInt(3) == 0 && body_check_cooldown <= 0) {
+            if (Ignis_Entity.this.getAnimationTick() == 45 && shouldFollowUp(4.0f) && Ignis_Entity.this.rand.nextInt(3) == 0 && body_check_cooldown <= 0) {
                 body_check_cooldown = BODY_CHECK_COOLDOWN;
                 AnimationHandler.INSTANCE.sendAnimationMessage(Ignis_Entity.this, BODY_CHECK_ATTACK3);
             }
@@ -1052,7 +1070,10 @@ public class Ignis_Entity extends Boss_monster {
         }
 
         public boolean shouldExecute() {
-            return Ignis_Entity.this.getAnimation() == BODY_CHECK_ATTACK1 || Ignis_Entity.this.getAnimation() == BODY_CHECK_ATTACK2 || Ignis_Entity.this.getAnimation() == BODY_CHECK_ATTACK3;
+            return Ignis_Entity.this.getAnimation() == BODY_CHECK_ATTACK1
+                    || Ignis_Entity.this.getAnimation() == BODY_CHECK_ATTACK2
+                    || Ignis_Entity.this.getAnimation() == BODY_CHECK_ATTACK3
+                    || Ignis_Entity.this.getAnimation() == BODY_CHECK_ATTACK4;
         }
 
         public void tick() {
