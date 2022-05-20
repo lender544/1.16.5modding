@@ -73,6 +73,7 @@ public class Ignis_Entity extends Boss_monster {
     private static final DataParameter<Boolean> IS_BLOCKING = EntityDataManager.createKey(Ignis_Entity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> IS_SHIELD = EntityDataManager.createKey(Ignis_Entity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> BOSS_PHASE = EntityDataManager.createKey(Ignis_Entity.class, DataSerializers.VARINT);
+    private Vector3d prevBladePos = new Vector3d(0, 0, 0);
     private int body_check_cooldown = 0;
     private int timeWithoutTarget;
     public float blockingProgress;
@@ -85,6 +86,9 @@ public class Ignis_Entity extends Boss_monster {
         this.setPathPriority(PathNodeType.LAVA, 8.0F);
         this.setPathPriority(PathNodeType.DANGER_FIRE, 0.0F);
         this.setPathPriority(PathNodeType.DAMAGE_FIRE, 0.0F);
+        if (world.isRemote)
+            socketPosArray = new Vector3d[] {new Vector3d(0, 0, 0)};
+
     }
 
     @Override
@@ -281,6 +285,7 @@ public class Ignis_Entity extends Boss_monster {
             this.getPassengers().get(0).setSneaking(false);
         }
         LivingEntity target = this.getAttackTarget();
+        spawnSwipeParticles();
         if (this.world.isRemote) {
             if (this.rand.nextInt(24) == 0 && !this.isSilent()) {
                 this.world.playSound(this.getPosX() + 0.5D, this.getPosY() + 0.5D, this.getPosZ() + 0.5D, SoundEvents.ENTITY_BLAZE_BURN, this.getSoundCategory(), 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
@@ -322,15 +327,18 @@ public class Ignis_Entity extends Boss_monster {
                         this.setAnimation(SMASH_IN_AIR);
                     } else if (this.getDistance(target) < 5.5F && this.getRNG().nextFloat() * 100.0F < 10f) {
                         Animation animation = getRandomPoke(rand);
-                        this.setAnimation(animation);
+                      //  this.setAnimation(animation);
+                        this.setAnimation(HORIZONTAL_SWING_ATTACK);
                     } else if (this.getDistance(target) < 5F && this.getRNG().nextFloat() * 100.0F < 10f) {
                         this.setAnimation(HORIZONTAL_SWING_ATTACK);
                     } else if (this.getDistance(target) < 3F && this.getRNG().nextFloat() * 100.0F < 36f) {
                         if (this.rand.nextInt(3) == 0 && body_check_cooldown <= 0) {
                             body_check_cooldown = BODY_CHECK_COOLDOWN;
-                            this.setAnimation(BODY_CHECK_ATTACK1);
+                            //this.setAnimation(BODY_CHECK_ATTACK1);
+                            this.setAnimation(HORIZONTAL_SWING_ATTACK);
                         } else {
-                            this.setAnimation(SHIELD_SMASH_ATTACK);
+                           // this.setAnimation(SHIELD_SMASH_ATTACK);
+                            this.setAnimation(HORIZONTAL_SWING_ATTACK);
                         }
                     }
                 }
@@ -376,7 +384,6 @@ public class Ignis_Entity extends Boss_monster {
             if (this.getAnimationTick() == 31) {
                 this.playSound(ModSounds.STRONGSWING.get(), 1.0f, 1F + this.getRNG().nextFloat() * 0.1F);
                 AreaAttack(5.25f,6,170,1.1f,0.08f,100,5 ,150);
-
             }
 
         }
@@ -567,6 +574,32 @@ public class Ignis_Entity extends Boss_monster {
                     target.startRiding(this, true);
                     AnimationHandler.INSTANCE.sendAnimationMessage(this, POKED_ATTACK);
                 }
+            }
+        }
+    }
+
+    private void spawnSwipeParticles() {
+        if (world.isRemote) {
+            Vector3d bladePos = socketPosArray[0];
+            int snowflakeDensity = 4;
+            float snowflakeRandomness = 0.5f;
+            double length = prevBladePos.subtract(bladePos).length();
+            int numClouds = (int) Math.floor(2 * length);
+            if (this.getAnimation() == HORIZONTAL_SWING_ATTACK) {
+                if (this.getAnimationTick() > 27 && this.getAnimationTick() < 33) {
+                    for (int i = 0; i < numClouds; i++) {
+                        double x = prevBladePos.x + i * (bladePos.x - prevBladePos.x) / numClouds;
+                        double y = prevBladePos.y + i * (bladePos.y - prevBladePos.y) / numClouds;
+                        double z = prevBladePos.z + i * (bladePos.z - prevBladePos.z) / numClouds;
+                        for (int j = 0; j < snowflakeDensity; j++) {
+                            float xOffset = snowflakeRandomness * (2 * rand.nextFloat() - 1);
+                            float yOffset = snowflakeRandomness * (2 * rand.nextFloat() - 1);
+                            float zOffset = snowflakeRandomness * (2 * rand.nextFloat() - 1);
+                            world.addParticle(ParticleTypes.FLAME, x + xOffset, y + yOffset, z + zOffset, 0, 0, 0);
+                        }
+                    }
+                }
+                prevBladePos = bladePos;
             }
         }
     }

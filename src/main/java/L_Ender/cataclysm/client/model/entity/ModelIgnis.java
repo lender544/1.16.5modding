@@ -57,7 +57,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
     private final AdvancedModelBox right_fist;
     private final AdvancedModelBox sword;
     private final AdvancedModelBox blade;
-    private final AdvancedModelBox blade2;
+    public AdvancedModelBox blade2;
     private final AdvancedModelBox blade_mid;
     private final AdvancedModelBox handle_core;
     private final AdvancedModelBox core;
@@ -895,7 +895,8 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
                 handle_core,
                 core,
                 shield_root,
-                shield
+                shield,
+                blade2
                 );
     }
 

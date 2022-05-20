@@ -17,6 +17,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,8 +31,14 @@ public class Boss_monster extends MonsterEntity implements IAnimatedEntity {
     private DamageSource killDataCause;
     private PlayerEntity killDataAttackingPlayer;
 
+    @OnlyIn(Dist.CLIENT)
+    public Vector3d[] socketPosArray;
+
     public Boss_monster(EntityType entity, World world) {
         super(entity, world);
+        if (world.isRemote) {
+            socketPosArray = new Vector3d[]{};
+        }
     }
 
     @Override
@@ -161,6 +169,13 @@ public class Boss_monster extends MonsterEntity implements IAnimatedEntity {
                 double angle = (getAngleBetweenEntities(this, entity) + 90) * Math.PI / 180;
                 entity.setMotion(-0.1 * Math.cos(angle), entity.getMotion().y, -0.1 * Math.sin(angle));
             }
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void setSocketPosArray(int index, Vector3d pos) {
+        if (socketPosArray != null && socketPosArray.length > index) {
+            socketPosArray[index] = pos;
         }
     }
 
