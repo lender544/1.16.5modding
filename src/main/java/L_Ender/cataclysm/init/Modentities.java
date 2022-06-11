@@ -90,7 +90,6 @@ public class ModEntities {
             .build(cataclysm.MODID + ":screen_shake"));
 
     public static final RegistryObject<EntityType<Ignis_Fireball_Entity>> IGNIS_FIREBALL = ENTITY_TYPE.register("ignis_fireball", () ->  EntityType.Builder.<Ignis_Fireball_Entity>create(Ignis_Fireball_Entity::new, EntityClassification.MISC)
-            .disableSummoning()
             .size(0.3125F, 0.3125F)
             .trackingRange(4)
             .updateInterval(10)

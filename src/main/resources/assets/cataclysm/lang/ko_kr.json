@@ -34,12 +34,12 @@
   "item.cataclysm.music_disc_netherite_monstrosity.desc": "Cinematic Danger Background Music | No Copyright",
   "item.cataclysm.music_disc_ender_guardian.desc": "Ean Grimm - Eternal",
 
-
   "item.cataclysm.endermaptera_spawn_egg": "엔더마프테라 생성 알",
   "item.cataclysm.ender_golem_spawn_egg": "엔더 골렘 생성 알",
   "item.cataclysm.ender_guardian_spawn_egg": "엔더 수호자 생성 알",
   "item.cataclysm.netherite_monstrosity_spawn_egg": "네더라이트 괴물 생성 알",
   "item.cataclysm.nameless_sorcerer_spawn_egg": "이름없는 마법사 생성 알",
+  "item.cataclysm.ignis_spawn_egg": "이그니스 생성 알",
 
   "itemGroup.cataclysmtab": "대격변",
   "block.cataclysm.witherite_block": "위더라이트 블록",

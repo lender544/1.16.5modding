@@ -188,6 +188,14 @@
       }
     ]
   },
+  "sword_stomp": {
+    "subtitle": "sword_stomp.sub",
+    "sounds": [
+      {
+        "name": "cataclysm:entity/sword_stomp"
+      }
+    ]
+  },
   "monstrosity_music": {
     "subtitle": "monstrosity_music.sub",
     "sounds": [

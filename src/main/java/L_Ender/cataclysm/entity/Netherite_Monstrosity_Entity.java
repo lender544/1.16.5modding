@@ -270,7 +270,6 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
         }
         AnimationHandler.INSTANCE.updateAnimations(this);
         LivingEntity target = this.getAttackTarget();
-
         if (this.getAnimation() == MONSTROSITY_EARTHQUAKE && this.getAnimationTick() == 34
                 || this.getAnimation() == MONSTROSITY_EARTHQUAKE2 && this.getAnimationTick() == 24
                 || this.getAnimation() == MONSTROSITY_EARTHQUAKE3 && this.getAnimationTick() == 29 ){

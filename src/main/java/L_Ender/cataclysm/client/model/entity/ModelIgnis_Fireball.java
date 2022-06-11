@@ -8,28 +8,30 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelIgnis_Fireball extends AdvancedEntityModel<Entity> {
+
     private final AdvancedModelBox root;
-    private final AdvancedModelBox glass;
-    private final AdvancedModelBox cube;
+    private final AdvancedModelBox core;
+    private final AdvancedModelBox out_line;
 
     public ModelIgnis_Fireball() {
         textureWidth = 64;
         textureHeight = 64;
 
         root = new AdvancedModelBox(this);
-        root.setRotationPoint(0.0F, 24.0F, 0.0F);
+        root.setRotationPoint(0.0F, 0.0F, 0.0F);
 
 
-        glass = new AdvancedModelBox(this);
-        glass.setRotationPoint(0.0F, -5.0F, 0.0F);
-        root.addChild(glass);
-        glass.setTextureOffset(0, 21).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+        core = new AdvancedModelBox(this);
+        core.setRotationPoint(0.0F, 0.0F, 0.0F);
+        root.addChild(core);
+        core.setTextureOffset(20, 37).addBox(-4.0F, -4.0F, -1.0F, 8.0F, 8.0F, 2.0F, 0.0F, false);
+        core.setTextureOffset(0, 31).addBox(-1.0F, -4.0F, -4.0F, 2.0F, 8.0F, 8.0F, 0.0F, false);
+        core.setTextureOffset(0, 21).addBox(-4.0F, -1.0F, -4.0F, 8.0F, 2.0F, 8.0F, 0.0F, false);
 
-        cube = new AdvancedModelBox(this);
-        cube.setRotationPoint(0.0F, -5.0F, 0.0F);
-        root.addChild(cube);
-        cube.setTextureOffset(0, 0).addBox(-5.0F, -5.0F, -5.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
-        this.updateDefaultPose();
+        out_line = new AdvancedModelBox(this);
+        out_line.setRotationPoint(0.0F, 0.0F, 0.0F);
+        root.addChild(out_line);
+        out_line.setTextureOffset(0, 0).addBox(-5.0F, -5.0F, -5.0F, 10.0F, 10.0F, 10.0F, 0.0F, false);
     }
 
     @Override
@@ -39,12 +41,13 @@ public class ModelIgnis_Fireball extends AdvancedEntityModel<Entity> {
 
     @Override
     public Iterable<AdvancedModelBox> getAllParts() {
-        return ImmutableList.of(root, cube, glass);
+        return ImmutableList.of(root,core,out_line);
     }
 
     @Override
     public void setRotationAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-        this.resetToDefaultPose();
+        this.root.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
+        this.root.rotateAngleX = headPitch * ((float) Math.PI / 180F);
     }
 
 
@@ -54,14 +57,4 @@ public class ModelIgnis_Fireball extends AdvancedEntityModel<Entity> {
         AdvancedModelBox.rotateAngleZ = z;
     }
 
-    public void animate(Ignis_Fireball_Entity entityIn, float ageInTicks) {
-        this.resetToDefaultPose();
-        float innerScale = (float) (1.0F + 0.25F * Math.abs(Math.sin(ageInTicks * 0.6F)));
-        float outerScale = (float) (1.0F + 0.5F * Math.abs(Math.cos(ageInTicks * 0.2F)));
-        this.glass.setScale(innerScale, innerScale, innerScale);
-        this.glass.rotateAngleX += ageInTicks * 0.25F;
-        this.cube.rotateAngleX += ageInTicks * 0.5F;
-        this.glass.setShouldScaleChildren(false);
-        this.cube.setScale(outerScale, outerScale, outerScale);
-    }
 }

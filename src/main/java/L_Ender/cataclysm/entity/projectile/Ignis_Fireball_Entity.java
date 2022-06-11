@@ -1,10 +1,12 @@
 package L_Ender.cataclysm.entity.projectile;
 
+import L_Ender.cataclysm.init.ModEffect;
 import L_Ender.cataclysm.init.ModEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -14,6 +16,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
@@ -26,7 +29,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class Ignis_Fireball_Entity extends DamagingProjectileEntity {
 
-    private static final DataParameter<Integer> VARIANT = EntityDataManager.createKey(Ignis_Fireball_Entity.class, DataSerializers.VARINT);
+    private static final DataParameter<Boolean> SOUL = EntityDataManager.createKey(Ignis_Fireball_Entity.class, DataSerializers.BOOLEAN);
 
     public Ignis_Fireball_Entity(EntityType<? extends Ignis_Fireball_Entity> type, World world) {
         super(type, world);
@@ -41,6 +44,10 @@ public class Ignis_Fireball_Entity extends DamagingProjectileEntity {
         super(ModEntities.IGNIS_FIREBALL.get(), x, y, z, accelX, accelY, accelZ, worldIn);
     }
 
+
+    protected float getMotionFactor() {
+        return this.isSoul() ? 1.1F : 0.95F;
+    }
     /**
      * Called when the fireball hits an entity
      */
@@ -52,7 +59,11 @@ public class Ignis_Fireball_Entity extends DamagingProjectileEntity {
             boolean flag;
             if (shooter instanceof LivingEntity) {
                 LivingEntity livingentity = (LivingEntity)shooter;
-                flag = entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, livingentity), 8.0F);
+                if(this.isSoul()) {
+                    flag = entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, livingentity), 8.0F);
+                }else{
+                    flag = entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, livingentity), 6.0F);
+                }
                 if (flag) {
                     if (entity.isAlive()) {
                         this.applyEnchantments(livingentity, entity);
@@ -63,18 +74,20 @@ public class Ignis_Fireball_Entity extends DamagingProjectileEntity {
             } else {
                 flag = entity.attackEntityFrom(DamageSource.MAGIC, 5.0F);
             }
-
             if (flag && entity instanceof LivingEntity) {
-                int i = 0;
-                if (this.world.getDifficulty() == Difficulty.NORMAL) {
-                    i = 10;
-                } else if (this.world.getDifficulty() == Difficulty.HARD) {
-                    i = 40;
+                EffectInstance effectinstance1 = ((LivingEntity)entity).getActivePotionEffect(ModEffect.EFFECTBLAZING_BRAND.get());
+                int i = 1;
+                if (effectinstance1 != null) {
+                    i += effectinstance1.getAmplifier();
+                    ((LivingEntity)entity).removeActivePotionEffect(ModEffect.EFFECTBLAZING_BRAND.get());
+                } else {
+                    --i;
                 }
 
-                if (i > 0) {
-                    ((LivingEntity)entity).addPotionEffect(new EffectInstance(Effects.WITHER, 20 * i, 1));
-                }
+                i = MathHelper.clamp(i, 0, 4);
+                EffectInstance effectinstance = new EffectInstance(ModEffect.EFFECTBLAZING_BRAND.get(), 150, i, false, false, true);
+                ((LivingEntity)entity).addPotionEffect(effectinstance);
+
             }
 
         }
@@ -91,54 +104,36 @@ public class Ignis_Fireball_Entity extends DamagingProjectileEntity {
     }
 
     public boolean canBeCollidedWith() {
-        return this.getVariant() == 2;
+        return false;
     }
 
+
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (this.getVariant() == 2) {
-            if (this.isInvulnerableTo(source)) {
-                return false;
-            } else {
-                this.markVelocityChanged();
-                Entity entity = source.getTrueSource();
-                if (entity != null) {
-                    Vector3d vector3d = entity.getLookVec();
-                    this.setMotion(vector3d);
-                    this.accelerationX = vector3d.x * 0.1D;
-                    this.accelerationY = vector3d.y * 0.1D;
-                    this.accelerationZ = vector3d.z * 0.1D;
-                    this.setShooter(entity);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
-        return super.attackEntityFrom(source, amount);
+        return false;
     }
 
     protected void registerData() {
-        this.dataManager.register(VARIANT, 0);
+        this.dataManager.register(SOUL, false);
     }
 
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
-        compound.putInt("Variant", this.getVariant());
+        compound.putBoolean("is_soul", this.isSoul());
     }
 
 
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
-        this.setVariant(compound.getInt("Variant"));
+        this.setSoul(compound.getBoolean("is_soul"));
     }
 
 
-    public void setVariant(int variant) {
-        getDataManager().set(VARIANT, Integer.valueOf(variant));
+    public void setSoul(boolean IsSoul) {
+        getDataManager().set(SOUL, IsSoul);
     }
 
-    public int getVariant() {
-        return getDataManager().get(VARIANT).intValue();
+    public boolean isSoul() {
+        return getDataManager().get(SOUL);
     }
 
     protected boolean isFireballFiery() {
