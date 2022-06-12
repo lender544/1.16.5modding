@@ -97,6 +97,7 @@ public class Ender_Guardian_Entity extends Boss_monster {
         this.setPathPriority(PathNodeType.WATER, -1.0F);
         this.setPathPriority(PathNodeType.DANGER_FIRE, 0.0F);
         this.setPathPriority(PathNodeType.DAMAGE_FIRE, 0.0F);
+        setConfigattribute(this, CMConfig.EnderguardianHealthMultiplier, CMConfig.EnderguardianDamageMultiplier);
     }
 
     @Override
@@ -136,8 +137,8 @@ public class Ender_Guardian_Entity extends Boss_monster {
         return MonsterEntity.func_234295_eP_()
                 .createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.27F)
-                .createMutableAttribute(Attributes.ATTACK_DAMAGE, CMConfig.EnderguardianDamage)
-                .createMutableAttribute(Attributes.MAX_HEALTH, CMConfig.EnderguardianHealth)
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 16)
+                .createMutableAttribute(Attributes.MAX_HEALTH, 300)
                 .createMutableAttribute(Attributes.ARMOR, 20)
                 .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
@@ -436,13 +437,6 @@ public class Ender_Guardian_Entity extends Boss_monster {
 
     public boolean isHelmetless() {
         return this.getHealth() <= this.getMaxHealth() / 2.0F;
-    }
-
-    public void setMaxHealth(double maxHealth, boolean heal){
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
-        if(heal){
-            this.heal((float)maxHealth);
-        }
     }
 
     @Override
@@ -811,19 +805,6 @@ public class Ender_Guardian_Entity extends Boss_monster {
     public boolean canBePushedByEntity(Entity entity) {
         return false;
     }
-
-
-
-    @Nullable
-    @Override
-    public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData livingData, @Nullable CompoundNBT compound) {
-        setIsHelmetless(false);
-        setUsedMassDestruction(false);
-        this.setMaxHealth(CMConfig.EnderguardianHealth, true);
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(CMConfig.EnderguardianDamage);
-        return super.onInitialSpawn(world, difficulty, reason, livingData, compound);
-    }
-
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         this.playSound(ModSounds.ENDERGUARDIANHURT.get(), 1.0f, 1.0f);

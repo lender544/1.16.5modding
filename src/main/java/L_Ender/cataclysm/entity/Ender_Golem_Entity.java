@@ -69,6 +69,7 @@ public class Ender_Golem_Entity extends Boss_monster {
         this.experienceValue = 15;
         this.stepHeight = 1.5F;
         this.setPathPriority(PathNodeType.WATER, -1.0F);
+        setConfigattribute(this, CMConfig.EnderGolemHealthMultiplier, CMConfig.EnderGolemDamageMultiplier);
     }
 
     @Override
@@ -92,8 +93,8 @@ public class Ender_Golem_Entity extends Boss_monster {
         return MonsterEntity.func_233666_p_()
                 .createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.28F)
-                .createMutableAttribute(Attributes.ATTACK_DAMAGE, CMConfig.EnderGolemDamage)
-                .createMutableAttribute(Attributes.MAX_HEALTH, CMConfig.EnderGolemHealth)
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 10)
+                .createMutableAttribute(Attributes.MAX_HEALTH, 150)
                 .createMutableAttribute(Attributes.ARMOR, 12)
                 .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
@@ -401,12 +402,6 @@ public class Ender_Golem_Entity extends Boss_monster {
 
     }
 
-    public void setMaxHealth(double maxHealth, boolean heal){
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
-        if(heal){
-            this.heal((float)maxHealth);
-        }
-    }
 
     @Override
     protected void repelEntities(float x, float y, float z, float radius) {
@@ -416,14 +411,6 @@ public class Ender_Golem_Entity extends Boss_monster {
     @Override
     public boolean canBePushedByEntity(Entity entity) {
         return false;
-    }
-
-    @Nullable
-    @Override
-    public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData livingData, @Nullable CompoundNBT compound) {
-        this.setMaxHealth(CMConfig.EnderGolemHealth, true);
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(CMConfig.EnderGolemDamage);
-        return super.onInitialSpawn(world, difficulty, reason, livingData, compound);
     }
 
     @Nullable

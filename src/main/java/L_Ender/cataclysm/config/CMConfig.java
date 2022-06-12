@@ -1,11 +1,7 @@
 package L_Ender.cataclysm.config;
 
 import L_Ender.cataclysm.cataclysm;
-import com.google.common.collect.Lists;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
-
-import java.util.List;
 
 public class CMConfig {
 
@@ -29,26 +25,26 @@ public class CMConfig {
     public static boolean EnderguardianBlockBreaking = true;
     public static boolean EndergolemBlockBreaking = false;
 
-    public static boolean SoulblacksmithSpawn = true;
-    public static boolean RuinedcitadelSpawn = true;
-
-    public static double MonstrosityHealth = 360D;
-    public static double MonstrosityDamage = 22D;
+    public static double MonstrosityHealthMultiplier = 1D;
+    public static double MonstrosityDamageMultiplier = 1D;
     public static boolean NetheritemonstrosityBodyBloking = true;
 
-    public static double EnderguardianHealth = 300D;
-    public static double EnderguardianDamage = 16D;
+    public static double EnderguardianHealthMultiplier = 1D;
+    public static double EnderguardianDamageMultiplier = 1D;
 
-    public static double IgnisHealth = 333D;
-    public static double IgnisDamage = 14D;
+    public static double IgnisHealthMultiplier = 1D;
+    public static double IgnisDamageMultiplier = 1D;
 
-    public static double EnderGolemHealth = 150D;
-    public static double EnderGolemDamage = 10D;
+    public static double EnderGolemHealthMultiplier = 1D;
+    public static double EnderGolemDamageMultiplier = 1D;
 
     public static double MonstrosityLongRangelimit = 18D;
     public static double EnderguardianLongRangelimit = 12D;
     public static double EndergolemLongRangelimit = 6D;
     public static double IgnisLongRangelimit = 20D;
+
+    public static boolean SoulblacksmithSpawn = true;
+    public static boolean RuinedcitadelSpawn = true;
 
 
     public static void bake(ModConfig config) {
@@ -70,16 +66,16 @@ public class CMConfig {
             EndergolemBlockBreaking = ConfigHolder.COMMON.EndergolemBlockBreaking.get();
             SoulblacksmithSpawn = ConfigHolder.COMMON.SoulblacksmithSpawn.get();
             RuinedcitadelSpawn = ConfigHolder.COMMON.RuinedcitadelSpawn.get();
-            MonstrosityHealth = ConfigHolder.COMMON.MonstrosityHealth.get();
-            MonstrosityDamage = ConfigHolder.COMMON.MonstrosityDamage.get();
-            EnderguardianHealth = ConfigHolder.COMMON.EnderguardianHealth.get();
-            EnderguardianDamage = ConfigHolder.COMMON.EnderguardianDamage.get();
+            MonstrosityHealthMultiplier = ConfigHolder.COMMON.MonstrosityHealthMultiplier.get();
+            MonstrosityDamageMultiplier = ConfigHolder.COMMON.MonstrosityDamageMultiplier.get();
+            EnderguardianHealthMultiplier = ConfigHolder.COMMON.EnderguardianHealthMultiplier.get();
+            EnderguardianDamageMultiplier = ConfigHolder.COMMON.EnderguardianDamageMultiplier.get();
 
-            EnderGolemHealth = ConfigHolder.COMMON.EndergolemHealth.get();
-            EnderGolemDamage = ConfigHolder.COMMON.EndergolemDamage.get();
+            EnderGolemHealthMultiplier = ConfigHolder.COMMON.EndergolemHealthMultiplier.get();
+            EnderGolemDamageMultiplier = ConfigHolder.COMMON.EndergolemDamageMultiplier.get();
 
-            IgnisHealth = ConfigHolder.COMMON.IgnisHealth.get();
-            IgnisDamage = ConfigHolder.COMMON.IgnisDamage.get();
+            IgnisHealthMultiplier = ConfigHolder.COMMON.IgnisHealthMultiplier.get();
+            IgnisDamageMultiplier = ConfigHolder.COMMON.IgnisDamageMultiplier.get();
             MonstrosityLongRangelimit = ConfigHolder.COMMON.MonstrosityLongRangelimit.get();
             EnderguardianLongRangelimit = ConfigHolder.COMMON.EnderguardianLongRangelimit.get();
             EndergolemLongRangelimit = ConfigHolder.COMMON.EndergolemLongRangelimit.get();

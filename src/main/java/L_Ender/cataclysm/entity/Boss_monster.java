@@ -5,8 +5,10 @@ import com.github.alexthe666.citadel.animation.Animation;
 import com.github.alexthe666.citadel.animation.AnimationHandler;
 import com.github.alexthe666.citadel.animation.IAnimatedEntity;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
@@ -22,6 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class Boss_monster extends MonsterEntity implements IAnimatedEntity {
     private int animationTick;
@@ -50,6 +53,21 @@ public class Boss_monster extends MonsterEntity implements IAnimatedEntity {
             }
         }
         return attack;
+    }
+
+    public static void setConfigattribute(LivingEntity entity, double hpconfig, double dmgconfig) {
+        ModifiableAttributeInstance maxHealthAttr = entity.getAttribute(Attributes.MAX_HEALTH);
+        if (maxHealthAttr != null) {
+            double difference = maxHealthAttr.getBaseValue() * hpconfig - maxHealthAttr.getBaseValue();
+            maxHealthAttr.applyNonPersistentModifier(new AttributeModifier(UUID.fromString("9513569b-57b6-41f5-814e-bdc49b81799f"), "Health config multiplier", difference, AttributeModifier.Operation.ADDITION));
+            entity.setHealth(entity.getMaxHealth());
+        }
+        ModifiableAttributeInstance attackDamageAttr = entity.getAttribute(Attributes.ATTACK_DAMAGE);
+        if (attackDamageAttr != null) {
+            double difference = attackDamageAttr.getBaseValue() * dmgconfig - attackDamageAttr.getBaseValue();
+            attackDamageAttr.applyNonPersistentModifier(new AttributeModifier(UUID.fromString("5b17d7cb-294e-4379-88ab-136c372bec9b"), "Attack config multiplier", difference, AttributeModifier.Operation.ADDITION));
+
+        }
     }
 
     double calculateRange(DamageSource damagesource) {

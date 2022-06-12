@@ -432,7 +432,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
         this.resetToDefaultPose();
         animator.update(entity);
         animator.setAnimation(SWING_ATTACK);
-        if(!entity.getIsShieldBreak()) {
+        if(entity.getShieldDurability() > 0) {
             animator.startKeyframe(20);
             animator.rotate(root, 0, (float) Math.toRadians(7.5F), 0);
             animator.rotate(upperbody, (float) Math.toRadians(-12.5F), (float) Math.toRadians(25F), (float) Math.toRadians(7.5F));
@@ -491,7 +491,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
         }
 
         animator.setAnimation(Ignis_Entity.HORIZONTAL_SWING_ATTACK);
-        if(!entity.getIsShieldBreak()) {
+        if(entity.getShieldDurability() > 0) {
             animator.startKeyframe(15);
             animator.rotate(root, 0, (float) Math.toRadians(-55F), 0);
             animator.rotate(upperbody, (float) Math.toRadians(-10F), (float) Math.toRadians(-62.5F), (float) Math.toRadians(-15F));
@@ -552,11 +552,11 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
         poke(entity,15,10,10);
 
         animator.setAnimation(Ignis_Entity.POKED_ATTACK);
-        if(!entity.getIsShieldBreak()) {
+        if(entity.getShieldDurability() > 0) {
             animator.startKeyframe(0);
             animator.rotate(root, 0, (float)Math.toRadians(-32.5F), 0);
             animator.rotate(upperbody, (float)Math.toRadians(7.5F), (float)Math.toRadians(-42.5F), (float)Math.toRadians(-15F));
-            animator.rotate(right_arm_joint, (float)Math.toRadians(-62.5F), (float)Math.toRadians(7.5F), (float)Math.toRadians(55F));
+            animator.rotate(right_arm_joint, (float)Math.toRadians(-65F), (float)Math.toRadians(7.5F), (float)Math.toRadians(55F));
             animator.rotate(right_hand, (float)Math.toRadians(15F), (float)Math.toRadians(57.5F), (float)Math.toRadians(20F));
             animator.rotate(right_fist, (float)Math.toRadians(72.5F), 0, 0);
             animator.rotate(head, (float)Math.toRadians(-10F), (float)Math.toRadians(67.5F), (float)Math.toRadians(-22.5F));
@@ -569,7 +569,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
             animator.startKeyframe(20);
             animator.rotate(root, 0, (float)Math.toRadians(-45F), 0);
             animator.rotate(upperbody, (float)Math.toRadians(-7.5F), (float)Math.toRadians(-42.5F), (float)Math.toRadians(-2.5F));
-            animator.rotate(right_arm_joint, (float)Math.toRadians(-62.5F), (float)Math.toRadians(30F), (float)Math.toRadians(70F));
+            animator.rotate(right_arm_joint, (float)Math.toRadians(-57.5F), (float)Math.toRadians(30F), (float)Math.toRadians(70F));
             animator.rotate(right_hand, (float)Math.toRadians(15F), (float)Math.toRadians(57.5F), (float)Math.toRadians(20F));
             animator.rotate(right_fist, (float)Math.toRadians(70F), 0, 0);
             animator.rotate(head, (float)Math.toRadians(-10F), (float)Math.toRadians(75F), (float)Math.toRadians(-12.5F));
@@ -583,7 +583,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
             animator.startKeyframe(0);
             animator.rotate(root, 0, (float)Math.toRadians(-40F), 0);
             animator.rotate(upperbody, (float)Math.toRadians(12.5F), (float)Math.toRadians(-45F), (float)Math.toRadians(-5F));
-            animator.rotate(right_arm_joint, (float)Math.toRadians(-60F), (float)Math.toRadians(10F), (float)Math.toRadians(45F));
+            animator.rotate(right_arm_joint, (float)Math.toRadians(-62.5F), (float)Math.toRadians(10F), (float)Math.toRadians(45F));
             animator.rotate(right_hand, (float)Math.toRadians(30F), (float)Math.toRadians(57.5F), (float)Math.toRadians(20F));
             animator.rotate(right_fist, (float)Math.toRadians(70F), 0, 0);
             animator.rotate(head, (float)Math.toRadians(-15F), (float)Math.toRadians(72.5F), (float)Math.toRadians(-32.5F));
@@ -596,7 +596,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
             animator.startKeyframe(20);
             animator.rotate(root, 0, (float)Math.toRadians(-52.5F), 0);
             animator.rotate(upperbody, (float)Math.toRadians(-2.5F), (float)Math.toRadians(-45F), (float)Math.toRadians(7.5F));
-            animator.rotate(right_arm_joint, (float)Math.toRadians(-60F), (float)Math.toRadians(32.5F), (float)Math.toRadians(70F));
+            animator.rotate(right_arm_joint, (float)Math.toRadians(-55F), (float)Math.toRadians(32.5F), (float)Math.toRadians(60F));
             animator.rotate(right_hand, (float)Math.toRadians(30F), (float)Math.toRadians(57.5F), (float)Math.toRadians(20F));
             animator.rotate(right_fist, (float)Math.toRadians(67.5F), 0, 0);
             animator.rotate(head, (float)Math.toRadians(-15F), (float)Math.toRadians(80F), (float)Math.toRadians(-22.5F));
@@ -863,7 +863,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
 
         animator.setAnimation(Ignis_Entity.BODY_CHECK_ATTACK2);
         animator.startKeyframe(0);
-        if(!entity.getIsShieldBreak()) {
+        if(entity.getShieldDurability() > 0) {
             animator.rotate(root, 0, (float) Math.toRadians(7.5F), 0);
             animator.rotate(upperbody, (float) Math.toRadians(-10F), (float) Math.toRadians(30F), 0);
             animator.rotate(right_arm_joint, (float) Math.toRadians(12.5F), (float) Math.toRadians(-5F), (float) Math.toRadians(47.5F));
@@ -899,7 +899,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
 
         animator.setAnimation(Ignis_Entity.BODY_CHECK_ATTACK4);
         animator.startKeyframe(0);
-        if(!entity.getIsShieldBreak()) {
+        if(entity.getShieldDurability() > 0) {
             animator.rotate(root, 0, (float) Math.toRadians(-32.5F), 0);
             animator.rotate(upperbody, (float) Math.toRadians(7.5F), (float) Math.toRadians(-42.5F), (float) Math.toRadians(-15F));
             animator.rotate(right_arm_joint, (float) Math.toRadians(-62.5F), (float) Math.toRadians(7.5F), (float) Math.toRadians(55F));
@@ -1168,7 +1168,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
     }
 
     private void poke(Ignis_Entity entity, int start, int setstatic, int reset){
-        if(!entity.getIsShieldBreak()) {
+        if(entity.getShieldDurability() > 0) {
             animator.startKeyframe(start);
             animator.rotate(root, (float) Math.toRadians(10F), 0, 0);
             animator.rotate(upperbody, (float) Math.toRadians(10F), (float) Math.toRadians(30F), (float) Math.toRadians(15F));
@@ -1184,7 +1184,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
             animator.startKeyframe(5);
             animator.rotate(root, 0, (float) Math.toRadians(-32.5F), 0);
             animator.rotate(upperbody, (float) Math.toRadians(7.5F), (float) Math.toRadians(-42.5F), (float) Math.toRadians(-15F));
-            animator.rotate(right_arm_joint, (float) Math.toRadians(-62.5F), (float) Math.toRadians(7.5F), (float) Math.toRadians(55F));
+            animator.rotate(right_arm_joint, (float) Math.toRadians(-65F), (float) Math.toRadians(7.5F), (float) Math.toRadians(55F));
             animator.rotate(right_hand, (float) Math.toRadians(15F), (float) Math.toRadians(57.5F), (float) Math.toRadians(20F));
             animator.rotate(right_fist, (float) Math.toRadians(72.5F), 0, 0);
             animator.rotate(head, (float) Math.toRadians(-10F), (float) Math.toRadians(67.5F), (float) Math.toRadians(-22.5F));
@@ -1210,7 +1210,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
             animator.startKeyframe(5);
             animator.rotate(root, 0, (float) Math.toRadians(-40F), 0);
             animator.rotate(upperbody, (float) Math.toRadians(12.5F), (float) Math.toRadians(-45F), (float) Math.toRadians(-5F));
-            animator.rotate(right_arm_joint, (float) Math.toRadians(-60F), (float) Math.toRadians(10F), (float) Math.toRadians(45F));
+            animator.rotate(right_arm_joint, (float) Math.toRadians(-62.5F), (float) Math.toRadians(10F), (float) Math.toRadians(45F));
             animator.rotate(right_hand, (float) Math.toRadians(30F), (float) Math.toRadians(57.5F), (float) Math.toRadians(20F));
             animator.rotate(right_fist, (float) Math.toRadians(70F), 0, 0);
             animator.rotate(head, (float) Math.toRadians(-15F), (float) Math.toRadians(72.5F), (float) Math.toRadians(-32.5F));
@@ -1224,7 +1224,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
 
 
     private void bodycheck(Ignis_Entity entity){
-        if(!entity.getIsShieldBreak()) {
+        if(entity.getShieldDurability() > 0) {
             animator.startKeyframe(12);
             animator.rotate(root, 0, (float) Math.toRadians(65F), 0);
             animator.rotate(upperbody, (float) Math.toRadians(10F), (float) Math.toRadians(5F), (float) Math.toRadians(-7.5F));
@@ -1296,13 +1296,24 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
         this.bob(root, walkSpeed * 0.2F, walkDegree * 2, false, ageInTicks, 1.0f);
         this.bob(right_arm_joint, walkSpeed * 0.15F, walkDegree * -1.2f, false, ageInTicks, 1.0f);
         this.bob(left_arm_joint, walkSpeed * 0.15F, walkDegree * -1.2f, false, ageInTicks, 1.0f);
-        if(blockingProgress < 10 || swordProgress < 10) {
-            this.flap(left_arm_joint, idleSpeed, idleDegree * 0.4F, false, 0, 0F, ageInTicks, 1);
-            this.flap(left_hand, idleSpeed, idleDegree * 0.4F, true, 0, -0.1F, ageInTicks, 1);
-            this.flap(left_fist, idleSpeed, idleDegree * 0.4F, true, 0, -0.1F, ageInTicks, 1);
-            this.flap(right_arm_joint, idleSpeed, idleDegree * 0.4F, true, 0, 0F, ageInTicks, 1);
-            this.flap(right_hand, idleSpeed, idleDegree * 0.4F, false, 0, -0.1F, ageInTicks, 1);
-            this.flap(right_fist, idleSpeed, idleDegree * 0.4F, false, 0, -0.1F, ageInTicks, 1);
+        if(entity.getShieldDurability() < 1) {
+            if (swordProgress < 10) {
+                this.flap(left_arm_joint, idleSpeed, idleDegree * 0.4F, false, 0, 0F, ageInTicks, 1);
+                this.flap(left_hand, idleSpeed, idleDegree * 0.4F, true, 0, -0.1F, ageInTicks, 1);
+                this.flap(left_fist, idleSpeed, idleDegree * 0.4F, true, 0, -0.1F, ageInTicks, 1);
+                this.flap(right_arm_joint, idleSpeed, idleDegree * 0.4F, true, 0, 0F, ageInTicks, 1);
+                this.flap(right_hand, idleSpeed, idleDegree * 0.4F, false, 0, -0.1F, ageInTicks, 1);
+                this.flap(right_fist, idleSpeed, idleDegree * 0.4F, false, 0, -0.1F, ageInTicks, 1);
+            }
+        }else{
+            if (blockingProgress < 10) {
+                this.flap(left_arm_joint, idleSpeed, idleDegree * 0.4F, false, 0, 0F, ageInTicks, 1);
+                this.flap(left_hand, idleSpeed, idleDegree * 0.4F, true, 0, -0.1F, ageInTicks, 1);
+                this.flap(left_fist, idleSpeed, idleDegree * 0.4F, true, 0, -0.1F, ageInTicks, 1);
+                this.flap(right_arm_joint, idleSpeed, idleDegree * 0.4F, true, 0, 0F, ageInTicks, 1);
+                this.flap(right_hand, idleSpeed, idleDegree * 0.4F, false, 0, -0.1F, ageInTicks, 1);
+                this.flap(right_fist, idleSpeed, idleDegree * 0.4F, false, 0, -0.1F, ageInTicks, 1);
+            }
         }
         this.faceTarget(netHeadYaw, headPitch, 1, head);
 
@@ -1325,7 +1336,7 @@ public class ModelIgnis extends AdvancedEntityModel<Ignis_Entity> {
         progressRotationPrev(left_arm_joint,swordProgress,(float)Math.toRadians(17.5F), (float)Math.toRadians(-32.5F), (float)Math.toRadians(7.5F), 10f);
         progressRotationPrev(left_hand,swordProgress,(float)Math.toRadians(-90F), 0, (float)Math.toRadians(-15F), 10f);
 
-        shield_root.showModel = !entity.getIsShieldBreak();
+        shield_root.showModel = entity.getShieldDurability() > 1;
     }
 
     @Override

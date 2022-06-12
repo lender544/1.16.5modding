@@ -93,6 +93,7 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
         this.setPathPriority(PathNodeType.WATER, -1.0F);
         this.setPathPriority(PathNodeType.DANGER_FIRE, 0.0F);
         this.setPathPriority(PathNodeType.DAMAGE_FIRE, 0.0F);
+        setConfigattribute(this, CMConfig.MonstrosityHealthMultiplier, CMConfig.MonstrosityDamageMultiplier);
     }
 
     @Override
@@ -120,8 +121,8 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
         return MonsterEntity.func_234295_eP_()
                 .createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D)
                 .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25F)
-                .createMutableAttribute(Attributes.ATTACK_DAMAGE, CMConfig.MonstrosityDamage)
-                .createMutableAttribute(Attributes.MAX_HEALTH, CMConfig.MonstrosityHealth)
+                .createMutableAttribute(Attributes.ATTACK_DAMAGE, 22)
+                .createMutableAttribute(Attributes.MAX_HEALTH, 360)
                 .createMutableAttribute(Attributes.ARMOR, 10)
                 .createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
@@ -339,13 +340,6 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
         }
     }
 
-    public void setMaxHealth(double maxHealth, boolean heal){
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
-        if(heal){
-            this.heal((float)maxHealth);
-        }
-    }
-
     @Override
     protected void onDeathAIUpdate() {
         super.onDeathAIUpdate();
@@ -528,16 +522,6 @@ public class Netherite_Monstrosity_Entity extends Boss_monster {
         }
         return itementity;
     }
-
-    @Nullable
-    @Override
-    public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData livingData, @Nullable CompoundNBT compound) {
-        setIsBerserk(false);
-        this.setMaxHealth(CMConfig.MonstrosityHealth, true);
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(CMConfig.MonstrosityDamage);
-        return super.onInitialSpawn(world, difficulty, reason, livingData, compound);
-    }
-
 
     public void travel(Vector3d travelVector) {
         this.setAIMoveSpeed((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * (isInLava() ? 0.2F : 1F));

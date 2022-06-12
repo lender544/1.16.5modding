@@ -17,8 +17,8 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue SoulblacksmithSpawn;
     public final ForgeConfigSpec.BooleanValue RuinedcitadelSpawn;
 
-    public final ForgeConfigSpec.DoubleValue EnderguardianHealth;
-    public final ForgeConfigSpec.DoubleValue EnderguardianDamage;
+    public final ForgeConfigSpec.DoubleValue EnderguardianHealthMultiplier;
+    public final ForgeConfigSpec.DoubleValue EnderguardianDamageMultiplier;
     public final ForgeConfigSpec.IntValue EnderguardianDamageCap;
     public final ForgeConfigSpec.BooleanValue EnderguardianBlockBreaking;
     public final ForgeConfigSpec.DoubleValue EnderguardianLongRangelimit;
@@ -28,19 +28,19 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.IntValue Lavabombmagazine;
     public final ForgeConfigSpec.IntValue Lavabombamount;
-    public final ForgeConfigSpec.DoubleValue MonstrosityHealth;
-    public final ForgeConfigSpec.DoubleValue MonstrosityDamage;
+    public final ForgeConfigSpec.DoubleValue MonstrosityHealthMultiplier;
+    public final ForgeConfigSpec.DoubleValue MonstrosityDamageMultiplier;
     public final ForgeConfigSpec.IntValue MonstrosityDamageCap;
     public final ForgeConfigSpec.DoubleValue MonstrosityLongRangelimit;
     public final ForgeConfigSpec.BooleanValue NetheritemonstrosityBodyBloking;
 
     public final ForgeConfigSpec.BooleanValue EndergolemBlockBreaking;
     public final ForgeConfigSpec.DoubleValue EndergolemLongRangelimit;
-    public final ForgeConfigSpec.DoubleValue EndergolemHealth;
-    public final ForgeConfigSpec.DoubleValue EndergolemDamage;
+    public final ForgeConfigSpec.DoubleValue EndergolemHealthMultiplier;
+    public final ForgeConfigSpec.DoubleValue EndergolemDamageMultiplier;
 
-    public final ForgeConfigSpec.DoubleValue IgnisHealth;
-    public final ForgeConfigSpec.DoubleValue IgnisDamage;
+    public final ForgeConfigSpec.DoubleValue IgnisHealthMultiplier;
+    public final ForgeConfigSpec.DoubleValue IgnisDamageMultiplier;
 
     public final ForgeConfigSpec.IntValue IgnisDamageCap;
     public final ForgeConfigSpec.DoubleValue IgnisLongRangelimit;
@@ -54,8 +54,8 @@ public class CommonConfig {
         builder.pop();
 
         builder.push("Ender Guardian");
-        EnderguardianHealth = buildDouble(builder, "EnderGuardianHealth", "all", 300.0D, 0D, 1000000D, "EnderGuardian's Health");
-        EnderguardianDamage = buildDouble(builder, "EnderGuardianDamage", "all", 16.0D, 0D, 1000000D, "EnderGuardian's Damage.");
+        EnderguardianHealthMultiplier = buildDouble(builder, "EnderGuardianHealthMultiplier", "all", 1.0D, 0D, 1000000D, "EnderGuardian's Health Multiplier");
+        EnderguardianDamageMultiplier = buildDouble(builder, "EnderGuardianDamageMultiplier", "all", 1.0D, 0D, 1000000D, "EnderGuardian's Damage Multiplier");
         EnderguardianDamageCap = buildInt(builder, "EnderGuardianDamageCap", "all", 22, 0, 1000000, "EnderGuardian's DamageCap");
         EnderguardianBlockBreaking = buildBoolean(builder, "EnderguardianBlockBreaking", "all", true, "Ender guardian's block breaking ignore the MobGriefing");
         RuinedcitadelSpawn = buildBoolean(builder, "RuinedcitadelSpawn", "all", true, "ruined citadel spawn");
@@ -68,8 +68,8 @@ public class CommonConfig {
         builder.push("Netherite Monstrosity");
         Lavabombmagazine = buildInt(builder, "LavabombMagazine", "all", 3, 1, 1000000, "Monstrosity's Lavabomb magazine.");
         Lavabombamount = buildInt(builder, "Lavabombamount", "all", 3, 1, 1000000, "Monstrosity's Lavabomb amount" );
-        MonstrosityHealth = buildDouble(builder, "MonstrosityHealth", "all", 360.0D, 0D, 1000000D, "Monstrosity's Health");
-        MonstrosityDamage = buildDouble(builder, "MonstrosityDamage", "all", 22.0D, 0D, 1000000D, "Monstrosity's Damage");
+        MonstrosityHealthMultiplier = buildDouble(builder, "MonstrosityHealthMultiplier", "all", 1.0D, 0D, 1000000D, "Monstrosity's Health Multiplier");
+        MonstrosityDamageMultiplier = buildDouble(builder, "MonstrosityDamageMultiplier", "all", 1.0D, 0D, 1000000D, "Monstrosity's Damage Multiplier");
         MonstrosityDamageCap = buildInt(builder, "MonstrosityDamageCap", "all", 22, 0, 1000000, "Monstrosity's DamageCap");
         SoulblacksmithSpawn = buildBoolean(builder, "SoulblacksmithSpawn", "all", true, "soul black smith spawn");
         NetheritemonstrosityBodyBloking = buildBoolean(builder, "NetheritemonstrosityBodyBloking", "all", true, "Monstrosity's bodyBlocking verdict");
@@ -79,13 +79,13 @@ public class CommonConfig {
         builder.push("Ender Golem");
         EndergolemBlockBreaking = buildBoolean(builder, "EndergolemBlockBreaking", "all", false, "Ender Golem's block breaking ignore the MobGriefing");
         EndergolemLongRangelimit = buildDouble(builder, "Endergolem's prevent attacks from far away Range", "all", 6.0D, 1D, 1000000D, "Endergolem's Immune to Long distance attack range.");
-        EndergolemHealth = buildDouble(builder, "GolemHealth", "all", 150.0D, 0D, 1000000D, "Golem's Health");
-        EndergolemDamage = buildDouble(builder, "GolemDamage", "all", 10.0D, 0D, 1000000D, "Golem's Damage.");
+        EndergolemHealthMultiplier = buildDouble(builder, "GolemHealthMultiplier", "all", 1.0D, 0D, 1000000D, "Golem's Health Multiplier");
+        EndergolemDamageMultiplier = buildDouble(builder, "GolemDamageMultiplier", "all", 1.0D, 0D, 1000000D, "Golem's Damage Multiplier");
         builder.pop();
 
         builder.push("Ignis");
-        IgnisHealth = buildDouble(builder, "IgnisHealth", "all", 333.0D, 0D, 1000000D, "Ignis's Health");
-        IgnisDamage = buildDouble(builder, "IgnisDamage", "all", 14.0D, 0D, 1000000D, "Ignis's Damage.");
+        IgnisHealthMultiplier = buildDouble(builder, "IgnisHealthMultiplier", "all", 1.0D, 0D, 1000000D, "Ignis's Health Multiplier");
+        IgnisDamageMultiplier = buildDouble(builder, "IgnisDamageMultiplier", "all", 1.0D, 0D, 1000000D, "Ignis's Damage Multiplier");
         IgnisLongRangelimit = buildDouble(builder, "Ignis's prevent attacks from far away Range", "all", 20.0D, 1D, 1000000D, "Ignis's Immune to Long distance attack range.");
         IgnisDamageCap = buildInt(builder, "IgnisDamageCap", "all", 20, 0, 1000000, "Ignis's DamageCap");
         builder.pop();
